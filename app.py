@@ -17,7 +17,7 @@ def index():
     small_csv_query = stem + filetype_csv + t_query + ticker + '&' + a_query + api_key
     df_full_csv = pd.read_csv(small_csv_query, index_col='date', parse_dates=True)
     print(df_full_csv.head())
-    return HttpResponse('<pre>' + df_full_csv.head() + '</pre>')
+    return render_template('index.html')
 
 if __name__ == '__main__':
   app.run(port=33507)
