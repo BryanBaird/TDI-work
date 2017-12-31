@@ -32,12 +32,15 @@ def index2():
     f.write('Options: %s\n\n'%(app.vars['options']))
     f.close()
 
-    #return redirect('/main_lulu')
+    return redirect('/graph')
+
+@app.route('/graph', methods=['GET', 'POST'])
+def graph():
+    small_csv_query = stem + filetype_csv + t_query + app.vars['ticker'] + '&' + a_query + api_key
+    df_full_csv = pd.read_csv(small_csv_query, index_col='date', parse_dates=True)
+    
+    
     return render_template('index2.html')
 
-#@app.route('/graph', methods=['POST'])
-#def graph():
-    
-
 if __name__ == '__main__':
-  app.run(port=33507)
+  app.run(port=33507, debug=True)
