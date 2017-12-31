@@ -35,8 +35,8 @@ def index():
     #return redirect('/main_lulu')
     return render_template('index2.html')
 
-@app.route('/graph', methods=['POST'])
-def graph():
+#@app.route('/graph', methods=['POST'])
+#def graph():
     
 
 if __name__ == '__main__':
