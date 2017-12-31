@@ -39,7 +39,7 @@ def index2():
 
 @app.route('/graph', methods=['GET', 'POST'])
 def graph():
-    csv_query = stem + filetype_csv + t_query + app.vars['ticker'] + '&' + sd_query + apps.vars['startdate'] + '&' + a_query + api_key
+    csv_query = stem + filetype_csv + t_query + app.vars['ticker'] + '&' + sd_query + app.vars['startdate'] + '&' + a_query + api_key
     print('API call: %s' % csv_query)
     df = pd.read_csv(csv_query, index_col='date', parse_dates=True)
     
