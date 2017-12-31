@@ -11,6 +11,8 @@ filetype_csv = '.csv?'
 t_query = 'ticker='
 #ticker = 'GOOG' #returns Google stock prices by default
 
+sd_query = 'date.gte='
+
 a_query = 'api_key='
 api_key = 'uMSAPoLS_hMKaPdsa9y2'
 
@@ -26,7 +28,7 @@ def index():
 def index2():
     # request was a POST
     app.vars['ticker'] = request.form['ticker']
-    app.vars['options'] = request.form['options']
+    app.vars['startdate'] = request.form['startdate']
 
     #f = open('%s_%s.txt'%(app.vars['ticker'],app.vars['options']),'w')
     #f.write('Ticker: %s\n'%(app.vars['ticker']))
@@ -37,7 +39,7 @@ def index2():
 
 @app.route('/graph', methods=['GET', 'POST'])
 def graph():
-    csv_query = stem + filetype_csv + t_query + app.vars['ticker'] + '&' + a_query + api_key
+    csv_query = stem + filetype_csv + t_query + app.vars['ticker'] + '&' + sd_query + apps.vars['startdate'] + '&' + a_query + api_key
     print('API call: %s' % csv_query)
     df = pd.read_csv(csv_query, index_col='date', parse_dates=True)
     
