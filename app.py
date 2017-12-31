@@ -1,11 +1,17 @@
 from flask import Flask, render_template, request, redirect
 import requests
 import pandas as pd
+from bokeh.plotting import figure
+from bokeh.resources import CDN
+from bokeh.embed import file_html
+from bokeh.embed import components
+
+
 
 stem = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES'
 filetype_csv = '.csv?'
 t_query = 'ticker='
-ticker = 'GOOG' #returns Google stock prices by default
+#ticker = 'GOOG' #returns Google stock prices by default
 
 a_query = 'api_key='
 api_key = 'uMSAPoLS_hMKaPdsa9y2'
@@ -16,9 +22,9 @@ app.vars = {}
 
 @app.route('/', methods=['GET'])
 def index():
-    small_csv_query = stem + filetype_csv + t_query + ticker + '&' + a_query + api_key
-    df_full_csv = pd.read_csv(small_csv_query, index_col='date', parse_dates=True)
-    print(df_full_csv.head())
+    #small_csv_query = stem + filetype_csv + t_query + ticker + '&' + a_query + api_key
+    #df_full_csv = pd.read_csv(small_csv_query, index_col='date', parse_dates=True)
+    #print(df_full_csv.head())
     return render_template('index.html')
 
 @app.route('/', methods=['POST'])
@@ -39,8 +45,18 @@ def graph():
     small_csv_query = stem + filetype_csv + t_query + app.vars['ticker'] + '&' + a_query + api_key
     df_full_csv = pd.read_csv(small_csv_query, index_col='date', parse_dates=True)
     
+    output_html()
     
-    return render_template('graph.html')
+    plot = figure(tools=TOOLS,
+              title='%s Opening Stock Price' % app.vars['ticker'],
+              x_axis_label='date',
+              x_axis_type='datetime')
+
+    # add a line renderer
+    plot.line(small_csv_query.index, df_full_csv['open'], line_width=2)
+    
+    script, div = components(plot)
+    return render_template('graph.html', script=script, div=div)
 
 if __name__ == '__main__':
   app.run(port=33507, debug=True)
