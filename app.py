@@ -45,8 +45,6 @@ def graph():
     small_csv_query = stem + filetype_csv + t_query + app.vars['ticker'] + '&' + a_query + api_key
     df_full_csv = pd.read_csv(small_csv_query, index_col='date', parse_dates=True)
     
-    output_html()
-    
     plot = figure(tools=TOOLS,
               title='%s Opening Stock Price' % app.vars['ticker'],
               x_axis_label='date',
