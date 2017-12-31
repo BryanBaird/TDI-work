@@ -22,7 +22,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/', methods=['POST'])
-def index():
+def index2():
     # request was a POST
     app.vars['ticker'] = request.form['ticker']
     app.vars['options'] = request.form['options']
