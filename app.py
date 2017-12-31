@@ -14,20 +14,20 @@ app = Flask(__name__)
 
 app.vars = {}
 
-@app.route('/index', methods=['GET'])
+@app.route('/', methods=['GET'])
 def index():
     small_csv_query = stem + filetype_csv + t_query + ticker + '&' + a_query + api_key
     df_full_csv = pd.read_csv(small_csv_query, index_col='date', parse_dates=True)
     print(df_full_csv.head())
     return render_template('index.html')
 
-@app.route('/index', methods=['POST'])
+@app.route('/', methods=['POST'])
 def index2():
     # request was a POST
     app.vars['ticker'] = request.form['ticker']
     app.vars['options'] = request.form['options']
 
-    f = open('%s_%s.txt'%(app.vars['ticker'],app_lulu.vars['options']),'w')
+    f = open('%s_%s.txt'%(app.vars['ticker'],app.vars['options']),'w')
     f.write('Ticker: %s\n'%(app.vars['ticker']))
     f.write('Options: %s\n\n'%(app.vars['options']))
     f.close()
@@ -40,7 +40,7 @@ def graph():
     df_full_csv = pd.read_csv(small_csv_query, index_col='date', parse_dates=True)
     
     
-    return render_template('index2.html')
+    return render_template('graph.html')
 
 if __name__ == '__main__':
   app.run(port=33507, debug=True)
