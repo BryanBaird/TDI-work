@@ -14,14 +14,14 @@ app = Flask(__name__)
 
 app.vars = {}
 
-@app.route('/', methods=['GET'])
+@app.route('/index', methods=['GET'])
 def index():
     small_csv_query = stem + filetype_csv + t_query + ticker + '&' + a_query + api_key
     df_full_csv = pd.read_csv(small_csv_query, index_col='date', parse_dates=True)
     print(df_full_csv.head())
     return render_template('index.html')
 
-@app.route('/', methods=['POST'])
+@app.route('/index', methods=['POST'])
 def index2():
     # request was a POST
     app.vars['ticker'] = request.form['ticker']
