@@ -41,7 +41,7 @@ def index2():
 @app.route('/graph', methods=['GET', 'POST'])
 def graph():
     csv_query = stem + filetype_csv + t_query + app.vars['ticker'] + '&' + a_query + api_key
-    print('API call: ' + csv_query)
+    print('API call: %s' % csv_query)
     df = pd.read_csv(csv_query, index_col='date', parse_dates=True)
     
     print(df.head())
@@ -51,8 +51,8 @@ def graph():
     plot.line(df.index, df['open'], line_width=2)
     
     script, div = components(plot)
-    print('Script: ' + script)
-    print('div :' + div)
+    #print('Script: ' + script)
+    #print('div :' + div)
     
     return render_template('graph.html', script=script, div=div)
 
